@@ -1,0 +1,13 @@
+test/001_c1_060.txt 001
+test/001_c2_095.txt 001 
+test/001_c3_060.txt 001
+test/001_c4_030.txt 001
+test/002_c2_095.txt 002
+test/002_c3_025.txt 002
+test/003_c3_055.txt 003
+test/004_c1_045.txt 004
+test/004_c2_085.txt 004
+test/005_c1_025.txt 005
+test/005_c2_035.txt 005
+test/005_c3_080.txt 005
+test/005_c4_055.txt 005

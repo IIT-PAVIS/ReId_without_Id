@@ -60,7 +60,7 @@ def test_reid(model):
 
     CMC = CMC.float()
     CMC = CMC/len(query_label) #average CMC
-    print('Pool5 top1:%f top5:%f top10:%f mAP:%f'%(CMC[0],CMC[4],CMC[9],ap/len(query_label)))
+    print('Pool5 Feature top1:%f top5:%f top10:%f mAP:%f'%(CMC[0],CMC[4],CMC[9],ap/len(query_label)))
 
     result = {'gallery_f':gallery_feature_embed.numpy(),'gallery_label':gallery_label,
               'gallery_cam':gallery_cam,'query_f':query_feature_embed.numpy(),
@@ -87,7 +87,7 @@ def test_reid(model):
 
     CMC = CMC.float()
     CMC = CMC/len(query_label) #average CMC
-    print('embed top1:%f top5:%f top10:%f mAP:%f'%(CMC[0], CMC[4], CMC[9], ap/len(query_label)))
+    print('Embed Feature top1:%f top5:%f top10:%f mAP:%f'%(CMC[0], CMC[4], CMC[9], ap/len(query_label)))
 
 
 def load_test_data():

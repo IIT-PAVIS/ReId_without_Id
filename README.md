@@ -56,14 +56,12 @@ pip install tensorboard
 
 Prepaper Event-ReId Dataset
 ---------------------------------
-Details information of dataset and train/test set preparation is provided [here](https://github.com/IIT-PAVIS/PReId_wo_Id/blob/main/data)
-
-The **Event-ReId** can be downloaded from **here**, or you can use the [sample dataset](https://github.com/IIT-PAVIS/PReId_wo_Id/tree/main/data/sample_data) to check the train and test code. 
+Details information of dataset and train/test set preparation is provided [here](https://github.com/IIT-PAVIS/PReId_wo_Id/blob/main/data), **Event-ReId** dataset can be downloaded from [here](https://rb.gy/z4ocy); also you can use the [sample dataset](https://github.com/IIT-PAVIS/PReId_wo_Id/tree/main/data/sample_data) to check the train and test code. 
 
 
 Train
 ---------------------------------
-run the following script to train **anonymization and person ReId model** jointly.
+run the following script to train **Event Anonymization and Person ReId model** jointly.
 
 ```bash
 python train.py \
@@ -79,7 +77,7 @@ python train.py \
 
 Test
 ---------------------------------
-run the following script to evaluate **person-reid w/o id**
+run the following script to evaluate **Event-based Person ReId without Id**
 
 ```bash
 python test.py --model_path training/net_59.pth  # set path to model weights

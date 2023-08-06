@@ -7,14 +7,11 @@ Pdf of the paper **here**
 <img src="image/ReId_without_Id.gif" alt="over_view" width="600"/>      --> 
 
 <p align="center">
-  <img src="image/ReId_without_Id.gif" alt="over_view" width="800"/>
+  <img src="image/ReId_without_Id.gif" alt="over_view" title="My Image Caption" width="800"/>
 </p>
 
-_<p align="justify"> 
-<sub> Event-to-video conversion can be regarded as a privacy attack on event-camera, which reconstructs a person's appearance from an event stream <code style="color : red">**(a)**</code>. We propose a learnable Event Anonymization network architecture <code style="color : red">**(b)**</code>, which deals with such attacks by scrambling the event stream so that reconstruction deteriorates while preserving the performance of an event-based downstream task (e.g., person ReId <code style="color : red">**(c)**</code>). We also consider a possible Inversion Attack <code style="color : red">**(d)**</code>, where the attacker tries to reverse the proposed anonymization's effect to attain image reconstruction <code style="color : red">**(e)**</code>, but our model is resistant to an inversion attack._ </sub> 
-
-
-
+> <p align="justify"> Event-to-video conversion can be regarded as a privacy attack on event-camera, which reconstructs a person's appearance from an event stream <code style="color : red">(a)</code>. We propose a learnable Event Anonymization network architecture <code style="color : red">(b)</code>, which deals with such attacks by scrambling the event stream so that reconstruction deteriorates while preserving the performance of an event-based downstream task (e.g., person ReId <code style="color : red">(c)</code>). We also consider a possible Inversion Attack <code style="color : red">(d)</code>, where the attacker tries to reverse the proposed anonymization's effect to attain image reconstruction <code style="color : red">(e)</code>, but our model is resistant to an inversion attack.
+  
  
 ## **Abstract**
 <p align="justify"> Wide-scale use of visual surveillance in public spaces puts individual privacy at stake while increasing resource consumption (energy, bandwidth, and computation). Neuromorphic vision sensors (event-cameras) have been recently considered a valid solution to the privacy issue because they do not capture detailed RGB visual information of the subjects in the scene. However, recent deep learning architectures have been able to reconstruct images from event cameras with high fidelity, reintroducing a potential threat to privacy for event-based vision applications. In this paper, we aim to anonymize event-streams to protect the identity of human subjects against such image reconstruction attacks. To achieve this, we propose an end-to-end network architecture jointly optimized for the twofold objective of preserving privacy and performing a downstream task such as person ReId. Our network learns to scramble events, enforcing the degradation of images recovered from the privacy attacker. In this work, we also bring to the community the first-ever event-based person ReId dataset gathered to evaluate the performance of our approach.
@@ -88,6 +85,8 @@ run the following script to evaluate **person-reid w/o id**
 python test.py --model_path training/net_59.pth  # set path to model weights
 ```
 
+Cite our Paper
+---------------
 If you use this project for your research, please cite the following:
 ```
 @InProceedings{Ahmad2023eventreid,

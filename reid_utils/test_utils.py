@@ -16,6 +16,7 @@ def extract_feature(model,dataloaders):
     pool5_features = torch.FloatTensor()
     embed_features = torch.FloatTensor()
     count = 0
+    device = next(model.parameters()).device  
     for data in dataloaders:
         img, label = data
         n, c, h, w = img.size()
@@ -23,7 +24,7 @@ def extract_feature(model,dataloaders):
         for i in range(2):
             if(i==1):
                 img = fliplr(img)
-            input_img = Variable(img.cuda())
+            input_img = Variable(img.to(device))# .cuda())
             _, embed_feature, pool5_feature,_ = model(input_img)
             if(i==0):
                 ff_pool5 = torch.FloatTensor(n,pool5_feature.size(1)).zero_()
@@ -77,7 +78,6 @@ def evaluate_test(qf,ql,qc,gf,gl,gc):
     junk_index = np.append(junk_index2, junk_index1) #.flatten())
     
     #if not good_index.size==0:
- 
     CMC_tmp = compute_mAP(index, good_index, junk_index)
     return CMC_tmp
 
@@ -91,25 +91,18 @@ def evaluate(qf,ql,qc,gf,gl,gc):
     #index = index[0:2000]
     # good index
     query_index = []
-
     for i in range(len(gl)):
         if gl[i] == ql:
             query_index.append(i)
-
     camera_index = []
-
     for i in range(len(gc)):
         if gc[i] == qc:
             camera_index.append(i)
-
-
     good_index = np.setdiff1d(query_index, camera_index, assume_unique=True)
     junk_index1 = np.argwhere(gl==-1)
     junk_index2 = np.intersect1d(query_index, camera_index)
     junk_index = np.append(junk_index2, junk_index1) #.flatten())
-
     #if not good_index.size==0:
-   
     CMC_tmp = compute_mAP(index, good_index, junk_index)
     return CMC_tmp
 

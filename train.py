@@ -5,7 +5,6 @@ import json
 import os
 import pdb
 import sys
-import scipy.io
 import time
 import matplotlib.pyplot as plt
 import cv2 as cv
@@ -28,7 +27,7 @@ from e2vid_utils.utils.loading_utils import load_E2VID, get_device
 from e2vid_utils.e2vid_image_utils import *
 
 
-def train_model(model_ReId, model_E2VID, optimizer, scheduler, num_epochs=50):
+def train_model(model_ReId, model_E2VID, optimizer, scheduler, device, num_epochs=50):
     model_E2VID = model_E2VID.eval()
     start_time = time.time()
     writer = SummaryWriter()
@@ -55,11 +54,12 @@ def train_model(model_ReId, model_E2VID, optimizer, scheduler, num_epochs=50):
             # Iterate over data.
             for data in dataloaders:
                 input_voxel, labels = data
-                input_voxel = Variable(input_voxel.cuda())
-                labels = Variable(labels.cuda())
+                input_voxel = Variable(input_voxel.to(device))
+                labels = Variable(labels.to(device))
                 #rgb = Variable(rgb.cuda())
                 optimizer.zero_grad()
-
+                
+                """AN + ReId model joint training"""
                 [category, feature, _, AN_voxel] = model_ReId(input_voxel)
                 
                 """Structure Loss between input and output voxel"""
@@ -103,28 +103,11 @@ def train_model(model_ReId, model_E2VID, optimizer, scheduler, num_epochs=50):
                     
                     """
                     #img_recons_loss = voxel_img_reconst_loss(rgb, AN_predicted_img)
-
-                    # for i in range(reconst.shape[0]):
-                    #     new_predicted_img, states_voxel = model_E2VID(torch.unsqueeze(input_voxel[i], 0), last_states_voxel)
-                    #
-                    #     new_predicted_AN_img, states_AN_voxel = model_E2VID(torch.unsqueeze(AN_voxel[i], 0), last_states_AN_voxel)
-                    #
-                    #     new_predicted_AN_img = un_mask_filter(new_predicted_AN_img)
-                    #     new_predicted_AN_img = intensity_rescaler(new_predicted_AN_img)
-                    #
-                    #
-                    #     loss_3 += loss_function(new_predicted_img, new_predicted_AN_img)
-                    #
-                    #     last_states_voxel = states_voxel
-                    #     last_states_reconst = states_AN_voxel
-
-                    # loss_3 = loss_3/reconst.shape[0]
-                    """
                     
                     """end of e2vid"""
 
-                writer.add_scalars(f'batch_loss', {'voxel_loss': voxel_recons_loss, 'image_loss': img_recons_loss, 'reid_loss': loss_reid}, batch_count)
-                print('batch loss', voxel_recons_loss, img_recons_loss, loss_reid)
+                writer.add_scalars(f'batch_loss', {'voxel_loss': voxel_recons_loss.item(), 'image_loss': img_recons_loss, 'reid_loss': loss_reid}, batch_count)
+                print('batch loss', voxel_recons_loss.item(), img_recons_loss.item(), loss_reid.item())
                 batch_count += 1
 
                 """Total Loss"""
@@ -171,7 +154,7 @@ def save_network(network1, epoch_label):
     save_filename = 'net_%s.pth'% epoch_label
     save_path1 = os.path.join('./' + opt.file_name, save_filename)
     torch.save(network1.cpu().state_dict(), save_path1)
-    if torch.cuda.is_available:
+    if torch.cuda.is_available():
         network1.cuda(0)
 
 
@@ -209,7 +192,7 @@ def adjust_lr_softmax(optimizer, ep):
             optimizer.param_groups[index]['lr'] = lr
 
 
-def load_train_data():
+def load_train_data(num_workers=8):
 
     """Load Train Data"""
     if opt.represent == "voxel":
@@ -219,14 +202,14 @@ def load_train_data():
             cls_loader = torch.utils.data.DataLoader(cls_datasets,
                                                      sampler=RandomIdentitySampler(cls_datasets, opt.num_instances),
                                                      batch_size=opt.batchsize,
-                                                     shuffle=False, num_workers=8, drop_last=True)
+                                                     shuffle=False, num_workers=num_workers, drop_last=True)
 
             dataset_sizes_allSample = len(cls_loader)
 
         else:
             cls_datasets = voxelDataset(mode='train')
             cls_loader = torch.utils.data.DataLoader(cls_datasets, batch_size=opt.batchsize,
-                                                     shuffle=False, num_workers=8, drop_last=True)
+                                                     shuffle=False, num_workers=num_workers, drop_last=True)
 
             dataset_sizes_allSample = len(cls_loader)
 
@@ -266,7 +249,7 @@ if __name__ == '__main__':
     parser.add_argument('--num_Bin', default=5, type=int, help='number of channels of spatiotemporal event-voxel')
     parser.add_argument('--e2vid_path', default='e2vid_utils/pretrained/E2VID_lightweight.pth.tar', type=str, help='path to e2vid weights')
     parser.add_argument('--epoch', default=60, type=int, help='training epoch')
-    parser.add_argument('--file_name', default='training', type=str, help='file name to save')
+    parser.add_argument('--file_name', default='training', type=str, help='file name to save weights and log file')
     opt = parser.parse_args()
 
     """Save Log History"""
@@ -277,8 +260,9 @@ if __name__ == '__main__':
     str_gpu_ids = opt.gpu_ids.split(',')
     for str_id in str_gpu_ids:
         gpu_ids.append(int(str_id))
-    torch.cuda.set_device(0)
+    # torch.cuda.set_device(device)
     use_gpu = torch.cuda.is_available()
+    device  = torch.device('cuda' if use_gpu else 'cpu') 
     cudnn.enabled = True
     cudnn.benchmark = True
 
@@ -287,13 +271,16 @@ if __name__ == '__main__':
 
     """Optimizer"""
     optimizer = set_optimizer(reid_model)
-    reid_model = reid_model.cuda()
+    # reid_model = reid_model.cuda()
+    reid_model = reid_model.to(device)
     
     """Ëvent-to-Video Model"""
-    E2VID = load_E2VID(opt.e2vid_path)
-    E2VID = E2VID.cuda()
+    E2VID = load_E2VID(opt.e2vid_path, device)
+    # E2VID = E2VID.cuda()
+    E2VID = E2VID.to(device)
     intensity_rescaler = IntensityRescaler()
-    un_mask_filter = UnsharpMaskFilter(device=torch.device('cuda:0'))
+    # un_mask_filter = UnsharpMaskFilter(device=torch.device('cuda:0'))
+    un_mask_filter = UnsharpMaskFilter(device=device)
 
     """Set ReId Loss function"""
     criterion_triplet = TripletLoss(opt.margin)
@@ -308,4 +295,4 @@ if __name__ == '__main__':
         json.dump(vars(opt), fp, indent=1)
 
     """Start Training"""
-    model_ = train_model(reid_model, E2VID, optimizer, None, num_epochs=opt.epoch)
+    model_ = train_model(reid_model, E2VID, optimizer, None, device, num_epochs=opt.epoch)

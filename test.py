@@ -60,7 +60,7 @@ def test_reid(model):
 
     CMC = CMC.float()
     CMC = CMC/len(query_label) #average CMC
-    print('Pool5 Feature top1:%f top5:%f top10:%f mAP:%f'%(CMC[0],CMC[4],CMC[9],ap/len(query_label)))
+    print('Pool5-Feature top1:%f top5:%f top10:%f mAP:%f'%(CMC[0],CMC[4],CMC[9],ap/len(query_label)))
 
     result = {'gallery_f':gallery_feature_embed.numpy(),'gallery_label':gallery_label,
               'gallery_cam':gallery_cam,'query_f':query_feature_embed.numpy(),
@@ -87,7 +87,7 @@ def test_reid(model):
 
     CMC = CMC.float()
     CMC = CMC/len(query_label) #average CMC
-    print('Embed Feature top1:%f top5:%f top10:%f mAP:%f'%(CMC[0], CMC[4], CMC[9], ap/len(query_label)))
+    print('Embed-Feature top1:%f top5:%f top10:%f mAP:%f'%(CMC[0], CMC[4], CMC[9], ap/len(query_label)))
 
 
 def load_test_data():
@@ -131,15 +131,16 @@ if __name__ == '__main__':
     str_gpu_ids = opt.gpu_ids.split(',')
     for str_id in str_gpu_ids:
         gpu_ids.append(int(str_id))
-    torch.cuda.set_device(0)
+    # torch.cuda.set_device(0)
     use_gpu = torch.cuda.is_available()
+    device  = torch.device('cuda' if use_gpu else 'cpu')
     cudnn.enabled = True
     cudnn.benchmark = True
 
     """re-id Model"""
     reid_model = EvReId(class_num=22, num_channel=opt.num_channel, AE_block=opt.An_model_block)
     reid_model = load_network(reid_model, opt.model_path)
-    reid_model = reid_model.cuda()
+    reid_model = reid_model.to(device) #.cuda()
 
     """Save Dir"""
     dir_name = os.path.join('./' + opt.file_name, opt.name)

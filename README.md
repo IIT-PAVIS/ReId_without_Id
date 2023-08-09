@@ -1,7 +1,7 @@
 # Person Re-Identification without Identification via Event Anonymization (ICCV 2023)
-This is the official implementation of the ICCV23 paper "**Person Re-Identification without Identification via Event Anonymization**" - _Shafiq Ahmad, Pietro Morerio, Alessio Del Bue_. 
+This is the official implementation of the ICCV23 paper "[**Person Re-Identification without Identification via Event Anonymization**](http://arxiv.org/abs/2308.04402)" - _Shafiq Ahmad, Pietro Morerio, Alessio Del Bue_. 
 
-Pdf of the paper **here**
+Pdf of the paper [here](http://arxiv.org/abs/2308.04402)
 
 <!--- <img align="right" src="images/approach.gif" alt="approach" width="400"/>  
 <img src="image/ReId_without_Id.gif" alt="over_view" width="600"/>      --> 

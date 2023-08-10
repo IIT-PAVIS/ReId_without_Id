@@ -99,9 +99,7 @@ If you use this project for your research, please cite the following:
 
 ## Acknowledgements
 
-The event-to-video generation code borrows from the following open-source projects, whom we would like to thank:
-
-- [E2VID](https://github.com/uzh-rpg/rpg_e2vid)
+The event-to-video generation code borrows from the following open-source projects, whom we would like to thank [E2VID](https://github.com/uzh-rpg/rpg_e2vid)
 
 Dataset was collected using [Prophesee](https://www.prophesee.ai/) event cameras 
 

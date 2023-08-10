@@ -54,7 +54,7 @@ pip install opencv_python==4.7.0.72 setuptools==59.5.0 filelock pyyaml requests
 pip install tensorboard
 ```
 
-Prepaper Event-ReId Dataset
+Prepare Event-ReId Dataset
 ---------------------------------
 Details information of dataset and train/test set preparation is provided [here](https://github.com/IIT-PAVIS/PReId_wo_Id/blob/main/data), **Event-ReId** dataset can be downloaded from [here](https://rb.gy/z4ocy); also you can use the [sample dataset](https://github.com/IIT-PAVIS/PReId_wo_Id/tree/main/data/sample_data) to check the train and test code. 
 

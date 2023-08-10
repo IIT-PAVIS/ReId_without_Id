@@ -103,3 +103,5 @@ The event-to-video generation code borrows from the following open-source projec
 
 - [E2VID](https://github.com/uzh-rpg/rpg_e2vid)
 
+Dataset was collected using [Prophesee](https://www.prophesee.ai/) event cameras 
+

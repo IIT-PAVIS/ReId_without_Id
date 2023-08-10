@@ -2,6 +2,8 @@
 
 Event-ReId is the first person re-identification dataset captured from event cameras. It has recordings from four indoor 640x480 pixel event cameras and the files have event streams recorded from 33 persons, each person walking in the four event-camera views. 
 
+**Note:** Dataset is collected using [Prophesee](https://www.prophesee.ai/) event cameras 
+
 
 ### Event-ReId
 

@@ -56,7 +56,7 @@ pip install tensorboard
 
 Prepare Event-ReId Dataset
 ---------------------------------
-Details information of dataset and train/test set preparation is provided [here](https://github.com/IIT-PAVIS/PReId_wo_Id/blob/main/data), **Event-ReId** dataset can be downloaded from [here](https://rb.gy/z4ocy); also you can use the [sample dataset](https://github.com/IIT-PAVIS/PReId_wo_Id/tree/main/data/sample_data) to check the train and test code. 
+Details information of dataset and train/test set preparation is provided [here](https://github.com/IIT-PAVIS/PReId_wo_Id/blob/main/data), **Event-ReId** dataset can be downloaded from [here](https://doi.org/10.5281/zenodo.8256439); also you can use the [sample dataset](https://github.com/IIT-PAVIS/PReId_wo_Id/tree/main/data/sample_data) to check the train and test code. 
 
 
 Train

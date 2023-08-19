@@ -114,11 +114,11 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--input_dir', type=str, default='Event_ReId/', help='event stream directory')
     parser.add_argument('--out_dir', type=str, default='output/', help='event stream directory')
-    parser.add_argument('--event_accum', type=str, default='time', help='chioce of generate voxel-grid '
+    parser.add_argument('--event_time', default=True, help='chioce of generate voxel-grid '
                                            'of constant time or constant count, use "time" or "count" ')
     parser.add_argument('--time_duration', type=float, default=33.3, help='time duration for event accumulation, '
                                            'we used 33.3ms')
-    parser.add_argument('--event_count', type=int, default=5000, help='number of event for event acculation, '
+    parser.add_argument('--event_count', type=int, default=5000, help='number of event for event accumulation, '
                                            'e.g. 5K, 7.5K, 10K etc.')
     params = parser.parse_args()
 
@@ -129,7 +129,7 @@ def main():
 
         for j in range(4):
             complete_data_path = os.path.join(data_path, sub_path[j])
-            if params.event_accum == 'time':
+            if params.event_time:
                 constant_time(complete_data_path, params.time_duration, params.out_dir)
 
             else:

@@ -44,9 +44,9 @@ def id_cam(path):
 
 def constant_count(complete_data_path, N, out_dir):
 
-    ts, x, y, pol = load_events(complate_data_path)
-    id_, cam = id_cam(complate_data_path)
-    save_dir = out_dir + '/' + complate_data_path + '/'
+    ts, x, y, pol = load_events(complete_data_path)
+    id_, cam = id_cam(complete_data_path)
+    save_dir = out_dir + '/' + complete_data_path + '/'
 
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
@@ -75,11 +75,11 @@ def constant_count(complete_data_path, N, out_dir):
     event_chunk.close()
 
 
-def constant_time(complate_data_path, integ_time, out_dir):
+def constant_time(complete_data_path, integ_time, out_dir):
 
-    ts, x, y, pol = load_events(complate_data_path)
-    id_, cam = id_cam(complate_data_path)
-    save_dir = out_dir + '/' + complate_data_path + '/'
+    ts, x, y, pol = load_events(complete_data_path)
+    id_, cam = id_cam(complete_data_path)
+    save_dir = out_dir + '/' + complete_data_path + '/'
     
     start_ts = ts[0]
     last_ts = ts[-1]

@@ -142,7 +142,7 @@ def train_model(model_ReId, model_E2VID, optimizer, scheduler, device, num_epoch
 def voxel_img_reconst_loss(gt, pr):
 
     if opt.AN_loss == 'SSIM':
-        loss_ = structural_similarity_index_measure(gt, pr)
+        loss_ = 1 - structural_similarity_index_measure(gt, pr)
 
     else:
         loss_ = torch.nn.MSELoss().cuda()

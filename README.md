@@ -83,7 +83,7 @@ run the following script to evaluate **Event-based Person ReId without Id**
 python test.py --model_path training/net_59.pth  # set path to model weights
 ```
 
-Cite our Paper
+Cite our Papers
 ---------------
 If you use this project for your research, please cite the following:
 ```
@@ -93,6 +93,15 @@ If you use this project for your research, please cite the following:
     booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)},
     month     = {October},
     year      = {2023}
+}
+
+
+@article{Ahmad2024,
+  title={Event Anonymization: Privacy-preserving Person Re-Identification and Pose Estimation in Event-based Vision},
+  author={Ahmad, Shafiq and Morerio, Pietro and Del Bue, Alessio},
+  journal={IEEE Access},
+  year={2024},
+  publisher={IEEE}
 }
 
 ```
